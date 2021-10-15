@@ -1,8 +1,10 @@
 package domains
 
 type NameDomain struct {
-	NameTitle string
-	LekSat    map[string]string
-	Shadow    map[string]string
-	Kalakini  []string
+	NameTitle string   `json:"name_title"`
+	DayBirth  string   `json:"day_birth"`
+	LekReang  string   `json:"lek_reang"`
+	LekSat    string   `json:"lek_sat"`
+	Shadow    string   `json:"shadow"`
+	Kalakini  []string `json:"kalakini"`
 }

@@ -1,14 +1,24 @@
 package managers
 
+import (
+	"bytes"
+	"strconv"
+
+	"github.com/sirupsen/logrus"
+)
+
 type NameManager struct {
-	nameTitle    string
-	charOfSat    map[string]string
-	charOfShadow map[string]string
+	nameTitle     []rune
+	dayBirth      string
+	charOfSat     map[string]string
+	charOfShadow  map[string]string
+	dayOfKalikini map[string]string
 }
 
-func NewNameManager(nameTitle string) *NameManager {
+func NewNameManager(nameTitle string, daybirth string) *NameManager {
 	return &NameManager{
-		nameTitle: nameTitle,
+		nameTitle: []rune(nameTitle),
+		dayBirth:  daybirth,
 		charOfSat: map[string]string{
 			"ก": "1", "ด": "1", "ถ": "1", "ท": "1", "ภ": "1", "ฤ": "1", "ฦ": "1", "า": "1", "ำ": "1", "ุ": "1", "่": "1",
 			"ข": "2", "ง": "2", "ช": "2", "บ": "2", "ป": "2", "เ": "2", "แ": "2", "ู": "2", "้": "2",
@@ -46,5 +56,75 @@ func NewNameManager(nameTitle string) *NameManager {
 			"ด": "10", "ต": "10", "ถ": "10", "ท": "10", "ธ": "10", "น": "10",
 			"ย": "12", "ร": "12", "ล": "12", "ว": "12",
 		},
+		dayOfKalikini: map[string]string{"sunday": "ศษสหฬฮ", "monday": "ะ้ื์แ๊ั็าิึี่ำุูเใไโอ", "tuesday": "กขคฆง", "wednesday1": "จฉชซฌญ", "wednesday2": "บปผฝพฟภม", "thursday": "ดตถทธน", "friday": "ยรลว", "saturday": "ฎฏฐฑฒณ"},
 	}
+}
+
+func (manager *NameManager) ReangName() string {
+	var b bytes.Buffer
+	namex := manager.nameTitle
+	for _, name := range string(namex) {
+		for k, number := range manager.charOfSat {
+			if string(name) == k {
+				b.WriteString(number)
+				break
+			}
+		}
+	}
+
+	return b.String()
+}
+
+//Sum of LekReang
+func (manager *NameManager) LekSat() string {
+	var leksatNum = 0
+	for _, charX := range string(manager.ReangName()) {
+		num, _ := strconv.Atoi(string(charX))
+		leksatNum += num
+	}
+	return strconv.Itoa(leksatNum)
+}
+
+func (manager *NameManager) Shadow() string {
+	shadow := 0
+	namex := manager.nameTitle
+	for _, name := range string(namex) {
+		for k, number := range manager.charOfShadow {
+			if string(name) == k {
+				numShar, _ := strconv.Atoi(number)
+				shadow += numShar
+				break
+			}
+		}
+	}
+
+	return strconv.Itoa(shadow)
+
+}
+
+func (manager *NameManager) Kalakini() (kalakinis []string) {
+
+	nameTitleRune := manager.nameTitle
+
+	for day, kalakiniList := range manager.dayOfKalikini {
+
+		if manager.dayBirth == day {
+
+			for _, charx := range string(nameTitleRune) {
+
+				for _, kalakiniCharx := range kalakiniList {
+
+					if charx == kalakiniCharx {
+						logrus.Println("KALAKINI", string(charx))
+						kalakinis = append(kalakinis, string(charx))
+						break
+					}
+				}
+			}
+			break
+		}
+	}
+
+	return
+
 }
