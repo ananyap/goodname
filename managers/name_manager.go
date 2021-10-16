@@ -3,8 +3,6 @@ package managers
 import (
 	"bytes"
 	"strconv"
-
-	"github.com/sirupsen/logrus"
 )
 
 type NameManager struct {
@@ -115,7 +113,7 @@ func (manager *NameManager) Kalakini() (kalakinis []string) {
 				for _, kalakiniCharx := range kalakiniList {
 
 					if charx == kalakiniCharx {
-						logrus.Println("KALAKINI", string(charx))
+						//logrus.Println("KALAKINI", string(charx))
 						kalakinis = append(kalakinis, string(charx))
 						break
 					}
