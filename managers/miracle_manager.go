@@ -13,7 +13,7 @@ func NewMiracleManager(lekSat string, numbersMiracle []domains.Number) *MiracleM
 	return &MiracleManager{lekSat: lekSat, numbersMiracle: numbersMiracle}
 }
 
-func (manager *MiracleManager) NumGoodOrBad() (numberMiracle domains.Number) {
+func (manager *MiracleManager) NumMiracle() (numberMiracle domains.Number) {
 	for _, NumberOBJ := range manager.numbersMiracle {
 		if manager.lekSat == NumberOBJ.PairNumber {
 			numberMiracle = NumberOBJ

@@ -6,11 +6,10 @@ import (
 )
 
 type NameManager struct {
-	nameTitle     []rune
-	dayBirth      string
-	charOfSat     map[string]string
-	charOfShadow  map[string]string
-	dayOfKalikini map[string]string
+	nameTitle    []rune
+	dayBirth     string
+	charOfSat    map[string]string
+	charOfShadow map[string]string
 }
 
 func NewNameManager(nameTitle string, daybirth string) *NameManager {
@@ -54,7 +53,6 @@ func NewNameManager(nameTitle string, daybirth string) *NameManager {
 			"ด": "10", "ต": "10", "ถ": "10", "ท": "10", "ธ": "10", "น": "10",
 			"ย": "12", "ร": "12", "ล": "12", "ว": "12",
 		},
-		dayOfKalikini: map[string]string{"sunday": "ศษสหฬฮ", "monday": "ะ้ื์แ๊ั็าิึี่ำุูเใไโอ", "tuesday": "กขคฆง", "wednesday1": "จฉชซฌญ", "wednesday2": "บปผฝพฟภม", "thursday": "ดตถทธน", "friday": "ยรลว", "saturday": "ฎฏฐฑฒณ"},
 	}
 }
 
@@ -97,32 +95,5 @@ func (manager *NameManager) Shadow() string {
 	}
 
 	return strconv.Itoa(shadow)
-
-}
-
-func (manager *NameManager) Kalakini() (kalakinis []string) {
-
-	nameTitleRune := manager.nameTitle
-
-	for day, kalakiniList := range manager.dayOfKalikini {
-
-		if manager.dayBirth == day {
-
-			for _, charx := range string(nameTitleRune) {
-
-				for _, kalakiniCharx := range kalakiniList {
-
-					if charx == kalakiniCharx {
-						//logrus.Println("KALAKINI", string(charx))
-						kalakinis = append(kalakinis, string(charx))
-						break
-					}
-				}
-			}
-			break
-		}
-	}
-
-	return
 
 }
